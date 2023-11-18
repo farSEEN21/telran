@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-public class LoginTests {
+public class LoginTests1 {
 
     WebDriver driver;
 
@@ -25,7 +25,7 @@ public class LoginTests {
     }
 
     @Test
-    public void loginPositive() {
+    public void loginPositive() throws InterruptedException {
 
 /*
 1. click login
@@ -35,20 +35,20 @@ public class LoginTests {
 5. validate by text: Logged in success   in the element //h2[@class='message']
  */
 
-        WebElement btnLogin = driver.findElement(By.xpath(""));
+        WebElement btnLogin = driver.findElement(By.xpath("//*[.='Log in']"));
         btnLogin.click();
-
-        WebElement inputEmail = driver.findElement(By.xpath(""));
+      //  Thread.sleep(200);
+        WebElement inputEmail = driver.findElement(By.xpath("//*[@id='email']"));
         inputEmail.click();
         inputEmail.clear();
-        inputEmail.sendKeys("");
+        inputEmail.sendKeys("xcvv@df.ru");
 
-        WebElement inputPassword = driver.findElement(By.xpath(""));
+        WebElement inputPassword = driver.findElement(By.xpath("//*[@id='password']"));
         inputPassword.click();
         inputPassword.clear();
-        inputPassword.sendKeys("");
+        inputPassword.sendKeys("x2fd34tjCp!");
 
-        WebElement btnYalla = driver.findElement(By.xpath(""));
+        WebElement btnYalla = driver.findElement(By.xpath("//*[@type='submit']"));
         btnYalla.click();
 
         WebElement textMessagePopUpH2 = driver.findElement(By.xpath("//h2[@class='message']"));
@@ -59,9 +59,11 @@ public class LoginTests {
     }
 
 
-    @AfterClass
-    public void postConditions() {
-        driver.quit();
-    }
+
+
+//    @AfterClass
+//  //  public void postConditions() {
+//        driver.quit();
+//    }
 
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -25,29 +26,71 @@ public class SeleniumXpathIcarro {
     }
 
     @Test
-    public void test1Xpath() {
-        System.out.println(driver.findElement(By.xpath("//div/h1")).getText());
-        driver.findElements(By.xpath("//*[text() = 'Find your car now!']"));
-        driver.findElements(By.xpath("//*[contains(text(), 'now!')]"));
+    public void testH1Xpath() {
+        String checking_text = driver.findElement(By.xpath("//div/h1")).getText();
+        Assert.assertEquals(checking_text, "Find your car now!", "Correct text");
+    }
+    @Test
+        public void testXpathByText() {
+            String checking_text = driver.findElement(By.xpath("//*[text() = 'Find your car now!']")).getText();
+            Assert.assertEquals(checking_text, "Find your car now!", "Correct text");
+        }
+    @Test
+    public void testXpathByContains() {
+        String checking_text =  driver.findElement(By.xpath("//*[contains(text(), 'now!')]")).getText();
+        Assert.assertEquals(checking_text, "Find your car now!", "Correct text");
+    }
+    @Test
+    public void testXpathByTypeID() {
+        String checking_text =    driver.findElement(By.xpath("//input[@id='city']")).getAttribute("ng-reflect-name");
+        Assert.assertEquals(checking_text, "city", "Correct text");
+    }
+ @Test
+    public void testXpathByClass() {
+        String checking_text =    driver.findElement(By.xpath("//div[@class='input-container']")).getAttribute("ng-reflect-name");
+        Assert.assertEquals(checking_text, "city", "Correct text");
+    }
+ @Test
+    public void testXpathByContain() {
+        String checking_text =    driver.findElement(By.xpath("//input[contains(@id,'ci')]")).getAttribute("ng-reflect-name");
+        Assert.assertEquals(checking_text, "city", "Correct text");
+    }
+ @Test
+    public void testXpathByContainCI() {
+        String checking_text =   driver.findElement(By.xpath("//input[contains(@id,'ci')]")).getAttribute("ng-reflect-name");
+        Assert.assertEquals(checking_text, "city", "Correct text");
+    }
+ @Test
+    public void testXpathByPartOfID() {
+        String checking_text =    driver.findElement(By.xpath("//input[contains(@id,'ci') or contains(@id,'da')]")).getAttribute("ng-reflect-name");
+        Assert.assertEquals(checking_text, "city", "Correct text");
+    }
+ @Test
+    public void testXpathByPartIDorType() {
+        String checking_text =   driver.findElement(By.xpath("//input[contains(@id,'ci') and @type='text']")).getAttribute("ng-reflect-name");
+        Assert.assertEquals(checking_text, "city", "Correct text");
+    }
+ @Test
+    public void testListElements() {
 
+     List<WebElement> listInputs = driver.findElements(By.xpath("//input[@id]"));
 
-        driver.findElement(By.xpath("//input[@id='city']"));
-        driver.findElement(By.xpath("//div[@class='input-container']//input[@id='city']"));
-        driver.findElement(By.xpath("//input[contains(@id,'ci')]"));
-        driver.findElement(By.xpath("//input[contains(@id,'ci') or contains(@id,'da')]"));
-        driver.findElement(By.xpath("//input[contains(@id,'ci') and @type='text']"));
-
-        List<WebElement> listInputs = driver.findElements(By.xpath("//input[@id]"));
-        System.out.println("length of list of inputs with id: " + listInputs.size());
-        WebElement parentOfInput = driver.findElement(By.xpath("//input[@id='city']/.."));
-        System.out.println("print attribute name " + parentOfInput.getAttribute("class"));
-
-        System.out.println(driver.findElement(By.xpath("//h1/following-sibling::h2")).getText());
-        System.out.println(driver.findElement(By.xpath("//h2/preceding-sibling::h1")).getText());
+         Assert.assertEquals(listInputs.size(), 2, "Correct length");
+    }
+ @Test
+    public void testXpathByID() {
+     WebElement parentOfInput = driver.findElement(By.xpath("//input[@id='city']/.."));
+        Assert.assertEquals(parentOfInput.getAttribute("class"), "input-container", "Correct text");
     }
 
-    @AfterClass
-    public void postConditions() {
-        driver.quit();
-    }
+
+//
+//        System.out.println(driver.findElement(By.xpath("//h1/following-sibling::h2")).getText());
+//        System.out.println(driver.findElement(By.xpath("//h2/preceding-sibling::h1")).getText());
+ //   }
+
+//    @AfterClass
+//    public void postConditions() {
+//        driver.quit();
+//    }
 }
